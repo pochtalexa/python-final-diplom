@@ -1,0 +1,5 @@
+manage.py makemigrations appname
+
+manage.py createsuperuser
+
+manage.py runserver
