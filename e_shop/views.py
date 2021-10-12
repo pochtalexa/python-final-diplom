@@ -20,8 +20,8 @@ from yaml import Loader
 from e_shop.models import Shop, Category, ProductInfo, Product, Parameter, ProductParameter, Order, OrderItem, Contact
 from e_shop.serializers import UserSerializer
 from e_shop.signals import new_user_registered, new_order
-from e_shop.serializers import (ProductSerializer, ProductInfoSerializer, OrderItemSerializer, OrderSerializer, \
-                                OrderItemUpdateSerializer, OrderCreateSerializer)
+from e_shop.serializers import (ProductSerializer, ProductInfoSerializer, OrderItemSerializer, OrderSerializer,
+                                OrderItemUpdateSerializer, OrderCreateSerializer, OrdeStaterSerializer)
 from e_shop.filters import ProductFilter
 
 
@@ -215,4 +215,23 @@ class OrderViewSet(ModelViewSet):
             return JsonResponse({'Status': 'updated'})
         else:
             return JsonResponse({'Status': 'Error', 'message': 'cannot update other order'})
+
+
+class OrderStateViewSet(ModelViewSet):
+    """
+    Класс для вывода статусов заказов
+    """
+
+    serializer_class = OrdeStaterSerializer
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
+
+
+    def get_permissions(self):
+        if self.action in ['retrieve', 'list']:
+            return [IsAuthenticated()]
+        else:
+            return [DenyAny()]
+
 

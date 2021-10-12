@@ -22,6 +22,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 router = routers.DefaultRouter()
 router.register('partner/update', views.UploadProductViewSet, basename='partner_update')
+router.register('partner/state', views.OrderStateViewSet, basename='partner_state')
 router.register('user/register', views.RegisterAccountViewSet, basename='user-register')
 router.register('products/list', views.ProductListViewSet, basename='products-list')
 router.register('products', views.ProductInfoViewSet, basename='products-info')

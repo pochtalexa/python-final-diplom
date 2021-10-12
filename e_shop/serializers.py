@@ -60,7 +60,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 
 class OrderItemUpdateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = OrderItem
         fields = ('id', 'order')
@@ -68,7 +67,6 @@ class OrderItemUpdateSerializer(serializers.ModelSerializer):
         # fields = ('__all__')
 
     def validate(self, data):
-
         product_quantity = ProductInfo.objects.filter(id=self.instance.id).get().quantity
         if data['quantity'] > product_quantity:
             raise serializers.ValidationError('Your quantity more than we have in base')
@@ -89,6 +87,12 @@ class OrderSerializer(serializers.ModelSerializer):
         # fields = ('id', 'ordered_items', 'state', 'dt', 'total_sum', 'contact',)
         fields = ('id', 'ordered_items', 'state', 'dt', 'contact',)
         read_only_fields = ('id',)
+
+
+class OrdeStaterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ('id', 'state')
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
